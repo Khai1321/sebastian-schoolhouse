@@ -297,9 +297,139 @@
       </table>
     </div>
   </div>
-
   <!-- Repeat for November–May using same structure -->
-  <div class="builder" id="week3-builder">
+<div class="collapsible">
+  <div class="collapsible-header" onclick="toggleSection(this)">📅 November</div>
+  <div class="collapsible-body">
+    <table>
+      <thead><tr><th>Week</th><th>Theme</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>9</td><td>Food and Nutrition</td><td>Healthy eating habits and food groups</td></tr>
+        <tr><td>10</td><td>Thankfulness</td><td>Gratitude, family traditions, and sharing</td></tr>
+        <tr><td>11</td><td>Shapes and Patterns</td><td>Recognizing and creating patterns</td></tr>
+        <tr><td>12</td><td>Weather and Seasons</td><td>Exploring seasonal changes and weather types</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="collapsible">
+  <div class="collapsible-header" onclick="toggleSection(this)">📅 December</div>
+  <div class="collapsible-body">
+    <table>
+      <thead><tr><th>Week</th><th>Theme</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>13</td><td>Celebrations Around the World</td><td>Holidays, customs, and cultural traditions</td></tr>
+        <tr><td>14</td><td>Giving and Kindness</td><td>Acts of kindness and community service</td></tr>
+        <tr><td>15</td><td>Winter Wonderland</td><td>Snow, ice, and seasonal fun</td></tr>
+        <tr><td>16</td><td>Storytelling</td><td>Creative writing and oral storytelling</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="collapsible">
+  <div class="collapsible-header" onclick="toggleSection(this)">📅 January</div>
+  <div class="collapsible-body">
+    <table>
+      <thead><tr><th>Week</th><th>Theme</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>17</td><td>New Year, New Goals</td><td>Personal growth and goal setting</td></tr>
+        <tr><td>18</td><td>Animals in Winter</td><td>Hibernation, migration, and adaptation</td></tr>
+        <tr><td>19</td><td>Transportation</td><td>Exploring cars, trains, planes, and more</td></tr>
+        <tr><td>20</td><td>Maps and Directions</td><td>Basic geography and spatial awareness</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="collapsible">
+  <div class="collapsible-header" onclick="toggleSection(this)">📅 February</div>
+  <div class="collapsible-body">
+    <table>
+      <thead><tr><th>Week</th><th>Theme</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>21</td><td>Friendship</td><td>Building relationships and empathy</td></tr>
+        <tr><td>22</td><td>Dental Health</td><td>Taking care of teeth and healthy habits</td></tr>
+        <tr><td>23</td><td>Black History Month</td><td>Celebrating heroes and cultural contributions</td></tr>
+        <tr><td>24</td><td>Feelings and Emotions</td><td>Identifying and expressing emotions</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="collapsible">
+  <div class="collapsible-header" onclick="toggleSection(this)">📅 March</div>
+  <div class="collapsible-body">
+    <table>
+      <thead><tr><th>Week</th><th>Theme</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>25</td><td>Plants and Gardening</td><td>Life cycles, planting, and nature</td></tr>
+        <tr><td>26</td><td>Rainbows and Weather</td><td>Colors, clouds, and seasonal changes</td></tr>
+        <tr><td>27</td><td>St. Patrick’s Day</td><td>Symbols, traditions, and Irish culture</td></tr>
+        <tr><td>28</td><td>Spring Animals</td><td>Baby animals and habitats</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="collapsible">
+  <div class="collapsible-header" onclick="toggleSection(this)">📅 April</div>
+  <div class="collapsible-body">
+    <table>
+      <thead><tr><th>Week</th><th>Theme</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>29</td><td>Earth Day</td><td>Protecting nature and recycling</td></tr>
+        <tr><td>30</td><td>Insects and Bugs</td><td>Exploring tiny creatures and their roles</td></tr>
+        <tr><td>31</td><td>Life Cycles</td><td>From seed to plant, egg to animal</td></tr>
+        <tr><td>32</td><td>Community Helpers</td><td>Jobs that help our neighborhoods</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="collapsible">
+  <div class="collapsible-header" onclick="toggleSection(this)">📅 May</div>
+  <div class="collapsible-body">
+    <table>
+      <thead><tr><th>Week</th><th>Theme</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>33</td><td>Flowers and Bees</td><td>Pollination and plant helpers</td></tr>
+        <tr><td>34</td><td>Outdoor Exploration</td><td>Nature walks and sensory play</td></tr>
+        <tr><td>35</td><td>Picnics and Play</td><td>Celebrating learning with fun</td></tr>
+        <tr><td>36</td><td>Kindergarten Memories</td><td>Reflecting on the year together</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+ 
+  
+
+<!-- Monthly Summary View -->
+<h2>🗓️ Monthly Summary</h2>
+<p>Select a month to see all weekly goals and activities in one place. You can print or save as PDF.</p>
+
+<div id="monthly-summary-controls" style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
+  <label for="monthSelect"><strong>Month:</strong></label>
+  <select id="monthSelect">
+    <option value="September">September</option>
+    <option value="October">October</option>
+    <option value="November">November</option>
+    <option value="December">December</option>
+    <option value="January">January</option>
+    <option value="February">February</option>
+    <option value="March">March</option>
+    <option value="April">April</option>
+    <option value="May">May</option>
+  </select>
+  <button class="print" onclick="printSection('monthly-summary')">🖨️ Print/Export PDF</button>
+</div>
+
+<div id="monthly-summary" class="builder" aria-live="polite">
+  <h3>Monthly overview</h3>
+  <p>Select a month to view the combined weekly plan.</p>
+</div>
+<div class="builder" id="week3-builder">
   <h3>📄 Week 3: Animals and Habitats</h3>
   <table>
     <thead>
@@ -349,32 +479,6 @@
   <button class="print-builder export-button">💾 Export PDF</button>
   <button class="print-builder clear-button" style="background:#ef4444;">🧹 Clear All</button>
 </div>
-
-<!-- Monthly Summary View -->
-<h2>🗓️ Monthly Summary</h2>
-<p>Select a month to see all weekly goals and activities in one place. You can print or save as PDF.</p>
-
-<div id="monthly-summary-controls" style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
-  <label for="monthSelect"><strong>Month:</strong></label>
-  <select id="monthSelect">
-    <option value="September">September</option>
-    <option value="October">October</option>
-    <option value="November">November</option>
-    <option value="December">December</option>
-    <option value="January">January</option>
-    <option value="February">February</option>
-    <option value="March">March</option>
-    <option value="April">April</option>
-    <option value="May">May</option>
-  </select>
-  <button class="print" onclick="printSection('monthly-summary')">🖨️ Print/Export PDF</button>
-</div>
-
-<div id="monthly-summary" class="builder" aria-live="polite">
-  <h3>Monthly overview</h3>
-  <p>Select a month to view the combined weekly plan.</p>
-</div>
-
 
   <a href="index.html" class="back-link">🏠 Back to Home</a>
 
