@@ -7,36 +7,40 @@ body {
   color: #1e3a8a;
 }
 
-/* Headings */
-h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  color: #1e40af;
-}
-
-h2 {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-  color: #2563eb;
-}
-
-h3 {
-  color: #2563eb;
-}
-
-/* Toolbar and buttons */
-.toolbar {
-  display: flex;
-  gap: 1rem;
+/* Header */
+.main-header {
+  text-align: center;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
 }
 
-button,
+.main-header h1 {
+  font-size: 2rem;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+
+.main-header p {
+  font-size: 1.1rem;
+  color: #475569;
+}
+
+/* Cards */
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid #bfdbfe;
+}
+
+/* Buttons */
+.button,
 .template-button,
 .back-link,
 .export-button,
 .clear-button {
+  display: inline-block;
   background: #3b82f6;
   color: white;
   padding: 0.6rem 1rem;
@@ -48,7 +52,7 @@ button,
   transition: background 0.3s ease;
 }
 
-button:hover,
+.button:hover,
 .template-button:hover,
 .back-link:hover,
 .export-button:hover,
@@ -56,7 +60,6 @@ button:hover,
   background: #2563eb;
 }
 
-/* Special buttons */
 .clear-button {
   background: #ef4444;
 }
@@ -88,14 +91,27 @@ button:hover,
   display: none;
 }
 
-/* Lists */
-ul {
-  margin: 0;
-  padding-left: 1.2rem;
+/* Builder container */
+.builder {
+  margin-top: 2rem;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-li {
-  margin-bottom: 0.4rem;
+/* Month headers */
+.month-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.month-icon {
+  width: 40px;
+  height: auto;
 }
 
 /* Tables */
@@ -134,14 +150,13 @@ caption {
   margin-bottom: 1.5rem;
 }
 
-/* Builder container */
-.builder {
-  margin-top: 2rem;
-  border: 1px solid #bfdbfe;
-  border-radius: 12px;
-  background: white;
-  padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+/* Divider images */
+img.divider {
+  width: 100%;
+  max-width: 600px;
+  margin: 1rem auto;
+  display: block;
+  border-radius: 8px;
 }
 
 /* Footer */
@@ -158,10 +173,15 @@ footer {
     flex-direction: column;
   }
 
-  button,
+  .button,
   .template-button,
   .back-link {
     width: 100%;
     text-align: center;
+  }
+
+  .month-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
