@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Sebastian’s Learning Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    :root {
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --bg: #ffffff;
+      --stripe: #f8fafc;
+      --border: #e5e7eb;
+      --heading: #0f172a;
+      --success: #16a34a;
+      --warn: #f59e0b;
+      --danger: #dc2626;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    .page {
+      max-width: 1024px;
+      margin: 2rem auto;
+      padding: 0 1rem 3rem;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+    .title {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--heading);
+      font-weight: 800;
+    }
+    .subtitle {
+      margin: 0.25rem 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    button {
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--ink);
+      padding: 0.6rem 0.9rem;
+      border-radius: 0.6rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    section {
+      margin: 2rem 0;
+    }
+    h2 {
+      margin-bottom: 0.75rem;
+      color: var(--heading);
+      font-size: 1.5rem;
+    }
+    .note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 0.8rem;
+      background: #fff;
+      box-shadow: 0 1px 0 rgba(17, 24, 39, 0.04);
+      padding: 1rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    thead th {
+      background: #f1f5f9;
+      color: var(--heading);
+      text-align: left;
+      font-weight: 700;
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody td {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody tr:nth-child(even) td {
+      background: var(--stripe);
+    }
+    select {
+      padding: 0.4rem;
+      border-radius: 0.4rem;
+      border: 1px solid var(--border);
+      font-weight: 600;
+    }
+    #progressChart {
+      display: block;
+      margin: 2rem auto;
+      max-width: 300px;
+    }
+    .button {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div>
+        <h1 class="title">Sebastian’s Learning Tracker</h1>
+        <p class="subtitle">Progress overview and weekly goals</p>
+      </div>
+      <div class="actions">
+        <button onclick="window.print()">Print Tracker</button>
+        <button class="primary" onclick="alert('Progress updated!')">Update Progress</button>
+      </div>
+    </div>
+    <section>
+      <h2>📘 Week 3: Animals and Habitats</h2>
+      <p class="note">Tracking progress on theme-based learning goals</p>
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Goal</th>
+              <th>Status</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Reading</td>
+              <td>Identify 3 animal sight words</td>
+              <td>
+                <select onchange="updateStatus(this)">
+                  <option>Completed</option>
+                  <option>In Progress</option>
+                  <option>Not Started</option>
+                </select>
+              </td>
+              <td>Recognized “bear,” “fish,” and “bird”</td>
+            </tr>
+            <tr>
+              <td>Math</td>
+              <td>Compare animal groups by size</td>
+              <td>
+                <select onchange="updateStatus(this)">
+                  <option>In Progress</option>
+                  <option>Completed</option>
+                  <option>Not Started</option>
+                </select>
+              </td>
+              <td>Needs help with “more/fewer” concept</td>
+            </tr>
+            <tr>
+              <td>Science</td>
+              <td>Describe animal adaptations</td>
+              <td>
+                <select onchange="updateStatus(this)">
+                  <option>Not Started</option>
+                  <option>In Progress</option>
+                  <option>Completed</option>
+                </select>
+              </td>
+              <td>Will begin with rainforest vs. desert animals</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>🧑‍🚒 Week 4: Community Helpers</h2>
+      <p class="note">Tracking progress on role-based learning goals</p>
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Goal</th>
+              <th>Status</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Reading</td>
+              <td>Match helpers to tools</td>
+              <td>
+                <select onchange="updateStatus(this)">
+                  <option>Completed</option>
+                  <option>In Progress</option>
+                  <option>Not Started</option>
+                </select>
+              </td>
+              <td>Matched hats and vehicles correctly</td>
+            </tr>
+            <tr>
+              <td>Art</td>
+              <td>Create thank-you cards</td>
+              <td>
+                <select onchange="updateStatus(this)">
+                  <option>Completed</option>
+                  <option>In Progress</option>
+                  <option>Not Started</option>
+                </select>
+              </td>
+              <td>Made cards for firefighters and doctors</td>
+            </tr>
+            <tr>
+              <td>PE</td>
+              <td>Complete obstacle course</td>
+              <td>
+                <select onchange="updateStatus(this)">
+                  <option>In Progress</option>
+                  <option>Completed</option>
+                  <option>Not Started</option>
+                </select>
+              </td>
+              <td>Enjoyed “Helper Says” game</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <canvas id="progressChart" width="300" height="300"></canvas>
+
+    <div style="text-align: center;">
+      <a href="index.html" class="button">🏠 Back to Home</a>
+    </div>
+  </div>
+
+  <footer style="text-align: center; margin-top: 2rem;">
+    <p>Made with ❤️ by Khai for Sebastian</p>
+  </footer>
+
+  <!-- Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- JavaScript for dropdown updates and chart rendering -->
+  <script>
+    function updateStatus(select) {
+      alert(`Status updated to: ${select.value}`);
+    }
+
+    const ctx = document.getElementById('progressChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Completed', 'In Progress', 'Not Started'],
+        datasets: [{
+          data: [4, 2, 1], // Update these numbers as needed
+          backgroundColor: ['#16a34a', '#f59e0b', '#dc2626']
+        }]
+      },
+      options: {
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
