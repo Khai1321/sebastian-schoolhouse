@@ -3,54 +3,282 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daily Lesson Plan Forms – Sebastian</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>🌞 Sebastian’s Daily Schedule</title>
   <style>
-    /* Embedded styles from your original layout */
-    /* [Your full CSS already included above] */
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: system-ui, sans-serif;
+      background: #f9fbfc;
+      color: #1f2937;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    p.description {
+      font-size: 1rem;
+      color: #4b5563;
+      margin-bottom: 2rem;
+    }
+    .toolbar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    button {
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    button.print {
+      background: #2563eb;
+      color: white;
+    }
+    button.toggle {
+      background: white;
+      color: #2563eb;
+      border: 2px solid #2563eb;
+    }
+    section.schedule {
+      margin-bottom: 2rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .section-header {
+      background: #f1f5f9;
+      padding: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .section-body {
+      padding: 1rem;
+      display: none;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 0.75rem;
+      text-align: left;
+    }
+    th {
+      background: #f9fafb;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.4rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      text-decoration: none;
+      background: #2563eb;
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="toolbar">
-      <button onclick="window.print()">Print all</button>
-      <button class="secondary" onclick="collapseAll()">Collapse/expand sections</button>
+  <h1>🌞 Our Daily Schedule</h1>
+  <p class="description">
+    This is a sample of Sebastian’s weekday schedule designed to keep him caught up with his kindergarten cohort. It incorporates core subjects, breaks, and flexible learning time.
+  </p>
+  <div class="toolbar">
+    <button class="print" onclick="window.print()">🖨️ Print</button>
+    <button class="toggle" onclick="toggleAll()">🔄 Expand/Collapse All</button>
+  </div>
+  <section class="schedule">
+    <div class="section-header" onclick="toggleSection(this)">📘 Week 3: Animals and Habitats</div>
+    <div class="section-body">
+      <table>
+        <thead>
+          <tr>
+            <th>🕒 Time</th>
+            <th>📘 Activity</th>
+            <th>🎯 Focus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>8:00 AM - 9:00 AM</td>
+            <td><input type="text" value="Morning Routine & Breakfast" /></td>
+            <td><input type="text" value="Hygiene, dressing, and a nutritious start to the day" /></td>
+          </tr>
+          <tr>
+            <td>9:00 AM - 9:45 AM</td>
+            <td><input type="text" value="English/Reading" /></td>
+            <td><input type="text" value="Read-alouds and sight words using animal-themed books" /></td>
+          </tr>
+          <tr>
+            <td>9:45 AM - 10:00 AM</td>
+            <td><input type="text" value="AM Short Break" /></td>
+            <td><input type="text" value="Snack, movement, or sensory play" /></td>
+          </tr>
+          <tr>
+            <td>10:00 AM - 10:45 AM</td>
+            <td><input type="text" value="Math" /></td>
+            <td><input type="text" value="Counting and sorting animal figures by type or habitat" /></td>
+          </tr>
+          <tr>
+            <td>10:45 AM - 11:30 AM</td>
+            <td><input type="text" value="Creative/Flexible Time" /></td>
+            <td><input type="text" value="Animal mask making, outdoor play, or themed games" /></td>
+          </tr>
+          <tr>
+            <td>11:30 AM - 12:15 PM</td>
+            <td><input type="text" value="Lunch Break" /></td>
+            <td><input type="text" value="Healthy meal and social time" /></td>
+          </tr>
+          <tr>
+            <td>12:15 PM - 1:00 PM</td>
+            <td><input type="text" value="Quiet Time/Nap Break" /></td>
+            <td><input type="text" value="Rest and relaxation" /></td>
+          </tr>
+          <tr>
+            <td>1:00 PM - 1:30 PM</td>
+            <td><input type="text" value="Science or Social Studies" /></td>
+            <td><input type="text" value="Explore animal habitats and life cycles" /></td>
+          </tr>
+          <tr>
+            <td>1:30 PM - 2:00 PM</td>
+            <td><input type="text" value="Art or Music" /></td>
+            <td><input type="text" value="Create animal sounds with instruments or draw habitats" /></td>
+          </tr>
+          <tr>
+            <td>2:00 PM - 2:15 PM</td>
+            <td><input type="text" value="PM Short Break" /></td>
+            <td><input type="text" value="Outdoor physical activity" /></td>
+          </tr>
+          <tr>
+            <td>2:15 PM - 2:45 PM</td>
+            <td><input type="text" value="Health or Physical Education" /></td>
+            <td><input type="text" value="Movement games inspired by animal motions" /></td>
+          </tr>
+          <tr>
+            <td>2:45 PM - 3:00 PM</td>
+            <td><input type="text" value="Wrap-up & Tidy-up" /></td>
+            <td><input type="text" value="Review animal facts and clean up" /></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </section>
 
-    <section class="plan" data-week="" data-theme="">
-      <header class="plan-header">
-        <div class="plan-title">
-          <h2>Daily Lesson Plan</h2>
-          <span class="badge">Kindergarten</span>
-        </div>
-        <div class="meta">
-          <div class="cell"><span class="label">Date</span><span class="value">September 14, 2025</span></div>
-          <div class="cell"><span class="label">Teacher</span><span class="value">Khai</span></div>
-          <div class="cell"><span class="label">Student</span><span class="value">Sebastian</span></div>
-          <div class="cell"><span class="label">Theme</span><span class="value">Community Helpers</span></div>
-          <div class="cell"><span class="label">Focus</span><span class="value">Safety & Roles</span></div>
-          <div class="cell"><span class="label">Mood</span><span class="value">Excited!</span></div>
-        </div>
-      </header>
+  <section class="schedule">
+    <div class="section-header" onclick="toggleSection(this)">📘 Week 4: Community Helpers</div>
+    <div class="section-body">
+      <table>
+        <thead>
+          <tr>
+            <th>🕒 Time</th>
+            <th>📘 Activity</th>
+            <th>🎯 Focus</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>8:00 AM - 9:00 AM</td>
+            <td><input type="text" value="Morning Routine & Breakfast" /></td>
+            <td><input type="text" value="Hygiene, dressing, and a nutritious start to the day" /></td>
+          </tr>
+          <tr>
+            <td>9:00 AM - 9:45 AM</td>
+            <td><input type="text" value="English/Reading" /></td>
+            <td><input type="text" value="Read-alouds and sight words using books about helpers" /></td>
+          </tr>
+          <tr>
+            <td>9:45 AM - 10:00 AM</td>
+            <td><input type="text" value="AM Short Break" /></td>
+            <td><input type="text" value="Snack, movement, or sensory play" /></td>
+          </tr>
+          <tr>
+            <td>10:00 AM - 10:45 AM</td>
+            <td><input type="text" value="Math" /></td>
+            <td><input type="text" value="Sorting tools or vehicles by community role" /></td>
+          </tr>
+          <tr>
+            <td>10:45 AM - 11:30 AM</td>
+            <td><input type="text" value="Creative/Flexible Time" /></td>
+            <td><input type="text" value="Dress-up play, role-playing community jobs" /></td>
+          </tr>
+          <tr>
+            <td>11:30 AM - 12:15 PM</td>
+            <td><input type="text" value="Lunch Break" /></td>
+            <td><input type="text" value="Healthy meal and social time" /></td>
+          </tr>
+          <tr>
+            <td>12:15 PM - 1:00 PM</td>
+            <td><input type="text" value="Quiet Time/Nap Break" /></td>
+            <td><input type="text" value="Rest and relaxation" /></td>
+          </tr>
+          <tr>
+            <td>1:00 PM - 1:30 PM</td>
+            <td><input type="text" value="Science or Social Studies" /></td>
+            <td><input type="text" value="Learn about different community roles and safety" /></td>
+          </tr>
+          <tr>
+            <td>1:30 PM - 2:00 PM</td>
+            <td><input type="text" value="Art or Music" /></td>
+            <td><input type="text" value="Create helper-themed crafts or sing related songs" /></td>
+          </tr>
+          <tr>
+            <td>2:00 PM - 2:15 PM</td>
+            <td><input type="text" value="PM Short Break" /></td>
+            <td><input type="text" value="Outdoor physical activity" /></td>
+          </tr>
+          <tr>
+            <td>2:15 PM - 2:45 PM</td>
+            <td><input type="text" value="Health or Physical Education" /></td>
+            <td><input type="text" value="Practice safety drills and movement games" /></td>
+          </tr>
+          <tr>
+            <td>2:45 PM - 3:00 PM</td>
+            <td><input type="text" value="Wrap-up & Tidy-up" /></td>
+            <td><input type="text" value="Review community helper roles and clean up" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <footer style="text-align: center; margin-top: 3rem;">
+    <p>Made with ❤️ by Khai for Sebastian</p>
+  </footer>
 
-      <div class="plan-body">
-        <div class="grid">
-          <div class="block">
-            <h3>Morning Activities</h3>
-            <div class="content">
-              <p>Circle time, songs, and helper-themed storybook</p>
-            </div>
-          </div>
-          <div class="block">
-            <h3>Math & Reading</h3>
-            <div class="content">
-              <p>Counting badges, matching helpers to tools</p>
-            </div>
-          </div>
-          <div class="block full">
-            <h3>Creative Time</h3>
-            <div class="content">
-              <p>Role-play stations: doctor, firefighter, mail carrier</p>
-            </div>
-          </div>
-          <div class="block full">
+  <script>
+    // Toggle individual section
+    function toggleSection(header) {
+      const body = header.nextElementSibling;
+      body.style.display = body.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Toggle all sections
+    function toggleAll() {
+      const bodies = document.querySelectorAll('.section-body');
+      const anyClosed = Array.from(bodies).some(body => body.style.display === 'none');
+      bodies.forEach(body => {
+        body.style.display = anyClosed ? 'block' : 'none';
+      });
+    }
+
+    // Initialize all sections as open
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.section-body').forEach(body => {
+        body.style.display = 'block';
+      });
+    });
+  </script>
+</body>
+</html>
