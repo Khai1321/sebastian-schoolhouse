@@ -2,91 +2,638 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sebastian's Lesson Plan</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📚 Lesson Plan</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: #f9fbfc;
+      color: #1f2937;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 2rem;
+      color: #2563eb;
+    }
+    .toolbar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    button.print {
+      background: #2563eb;
+      color: white;
+    }
+    button.toggle {
+      background: white;
+      color: #2563eb;
+      border: 2px solid #2563eb;
+    }
+    .collapsible {
+      margin-bottom: 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .collapsible-header {
+      padding: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      background: #f1f5f9;
+    }
+    .collapsible-body {
+      padding: 1rem;
+      display: none;
+    }
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    li {
+      margin-bottom: 0.4rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 0.75rem;
+      text-align: left;
+    }
+    th {
+      background: #f1f5f9;
+    }
+    caption {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      text-decoration: none;
+      background: #2563eb;
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    #searchBox {
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 1.5rem;
+    }
+    .template-button {
+      margin-top: 1rem;
+      display: inline-block;
+      background: #10b981;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+  <h2>🧮 Weekly Lesson Builder</h2>
+<p>Customize Sebastian’s weekly goals and activities. You can print each week’s plan or save it for later.</p>
+
+<style>
+  .builder {
+    margin-top: 2rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: white;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .builder h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #2563eb;
+  }
+  .builder table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  .builder th, .builder td {
+    border: 1px solid #e5e7eb;
+    padding: 0.6rem;
+    text-align: left;
+  }
+  .builder input[type="text"] {
+    width: 100%;
+    padding: 0.4rem;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+  }
+  .print-builder {
+    margin-top: 1rem;
+    background: #10b981;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>📚 Sebastian's Lesson Plan</h1>
-    <p>September Themes: Animals & Habitats, Community Helpers</p>
-  </header>
+  <h1>📚 Curriculum and Lesson Plan Development</h1>
+  <div class="toolbar">
+    <button class="print" onclick="window.print()">🖨️ Print</button>
+    <button class="toggle" onclick="toggleAll()">🔄 Expand/Collapse All</button>
+  </div>
+  <input type="text" id="searchBox" placeholder="🔍 Search goals or themes..." onkeyup="filterContent()" />
+  <h2>Annual Goals</h2>
 
-  <main>
-    <section id="september-schedules">
-      <style>
-        .schedule-table {
-          width: 100%;
-          border-collapse: collapse;
-          margin: 1.25rem 0;
-          table-layout: fixed;
-        }
-        .schedule-table th,
-        .schedule-table td {
-          border: 1px solid #ddd;
-          padding: 10px 12px;
-          vertical-align: top;
-          word-wrap: break-word;
-        }
-        .schedule-table thead th {
-          background: #f6f8fa;
-          font-weight: 600;
-          text-align: left;
-        }
-        .schedule-heading {
-          margin-top: 2rem;
-          margin-bottom: 0.25rem;
-          font-size: 1.35rem;
-        }
-        .schedule-subheading {
-          margin: 0 0 0.75rem 0;
-          color: #57606a;
-          font-size: 0.95rem;
-        }
-      </style>
-
-      <h2 class="schedule-heading">Week 3: Animals and Habitats — Alternative Schedule A</h2>
-      <p class="schedule-subheading">Theme-based suggestions are included in the Focus column.</p>
-      <!-- Week 3 Table -->
-      <table class="schedule-table" aria-label="Week 3 Alternative Schedule A">
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Activity</th>
-            <th>Focus</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Week 3 rows here -->
-          <!-- [Content omitted for brevity—use your original rows here] -->
-        </tbody>
-      </table>
-
-      <h2 class="schedule-heading">Week 4: Community Helpers — Alternative Schedule B</h2>
-      <p class="schedule-subheading">Theme-based suggestions are included in the Focus column.</p>
-      <!-- Week 4 Table -->
-      <table class="schedule-table" aria-label="Week 4 Alternative Schedule B">
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Activity</th>
-            <th>Focus</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Week 4 rows here -->
-          <!-- [Content omitted for brevity—use your original rows here] -->
-        </tbody>
-      </table>
-    </section>
-
-    <div style="text-align: center; margin-top: 2rem;">
-      <a href="index.html" class="button">🏠 Back to Home</a>
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleSection(this)">📘 English/Language Arts</div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Demonstrate understanding of the organization and basic features of print.</li>
+        <li>With prompting and support, ask and answer questions about key details in a text.</li>
+        <li>Know and apply grade-level phonics and word analysis skills in decoding words.</li>
+        <li>Write letters of the alphabet and several sight words.</li>
+      </ul>
     </div>
-  </main>
+  </div>
 
-  <footer>
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleSection(this)">➕ Math</div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Count to 100 by ones and by tens.</li>
+        <li>Understand the relationship between numbers and quantities; connect counting to cardinality.</li>
+        <li>Classify objects into given categories; count the numbers of objects in each category.</li>
+        <li>Identify and describe shapes (circles, squares, triangles, rectangles, hexagons, and cubes).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleSection(this)">🔬 Science</div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Ask questions about the world and make observations.</li>
+        <li>Use senses to gather information about objects and organisms.</li>
+        <li>Understand basic life cycles of plants and animals.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleSection(this)">🌍 Social Studies</div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Describe personal and family traditions and holidays.</li>
+        <li>Explain the roles of people in the local community.</li>
+        <li>Recognize and describe symbols of the United States.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleSection(this)">🎨 Art & Music</div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Use a variety of art materials to create and express ideas.</li>
+        <li>Experiment with different sounds and musical instruments.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleSection(this)">💪 Health & Physical Education</div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Identify healthy habits, such as hand washing and brushing teeth.</li>
+        <li>Develop fundamental motor skills, such as running, jumping, and hopping.</li>
+        <li>Develop techniques to improve impulsivity, aggression, and defiance.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleSection(this)">🌎 International Languages: Spanish & ASL</div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Learn basic greetings and common phrases in Spanish and American Sign Language (ASL).</li>
+        <li>Recognize and use simple vocabulary related to daily routines, colors, numbers, and emotions.</li>
+        <li>Practice finger spelling and basic signs for communication.</li>
+        <li>Engage in songs, games, and activities to reinforce language learning.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleSection(this)">💻 Technology</div>
+    <div class="collapsible-body">
+      <ul>
+        <li>Develop basic computer skills, including mouse control and keyboard familiarity.</li>
+        <li>Use age-appropriate educational software to support learning in core subjects.</li>
+        <li>Understand simple concepts of digital safety and responsible technology use.</li>
+        <li>Explore creative tools such as drawing apps and storytelling platforms.</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>
+    These goals align with Sebastian’s monthly themes and daily schedule. For example, phonics and sight word practice during English/Reading time supports language arts goals, while science experiments and nature exploration connect with monthly topics like "The Environment" and "Animals and Habitats." Language and technology activities are integrated into flexible learning blocks and thematic units.
+  </p>
+
+  <h2>🗂️ Weekly Lesson Templates</h2>
+  <a href="#" class="template-button" onclick="alert('Week 3 template coming soon!')">📄 Week 3: Animals and Habitats</a>
+  <a href="#" class="template-button" onclick="alert('Week 4 template coming soon!')">📄 Week 4: Community Helpers</a>
+  <h2>Monthly Theme Calendar</h2>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleSection(this)">📅 September</div>
+    <div class="collapsible-body">
+      <table>
+        <thead><tr><th>Week</th><th>Theme</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>All About Me</td><td>Self-awareness, Family</td></tr>
+          <tr><td>2</td><td>Seasons and Weather</td><td>Understanding Changes in Nature</td></tr>
+          <tr><td>3</td><td>Animals and Habitats</td><td>Learning About Different Animals</td></tr>
+          <tr><td>4</td><td>Community Helpers</td><td>Roles in the Community</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="collapsible">
+    <div class="collapsible-header" onclick="toggleSection(this)">📅 October</div>
+    <div class="collapsible-body">
+      <table>
+        <thead><tr><th>Week</th><th>Theme</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>5</td><td>Plants and Gardening</td><td>Basic Botany</td></tr>
+          <tr><td>6</td><td>Transportation</td><td>Different Modes of Transport</td></tr>
+          <tr><td>7</td><td>Healthy Habits</td><td>Nutrition, Exercise</td></tr>
+          <tr><td>8</td><td>Space and Planets</td><td>Introduction to Astronomy</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Repeat for November–May using same structure -->
+  <div class="builder" id="week3-builder">
+  <h3>📄 Week 3: Animals and Habitats</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Goal</th>
+        <th>Activity</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>English</td>
+        <td><input type="text" value="Sight word practice" /></td>
+        <td><input type="text" value="Read animal-themed books" /></td>
+        <td><input type="text" value="Use flashcards and storytime" /></td>
+      </tr>
+      <tr>
+        <td>Math</td>
+        <td><input type="text" value="Counting and sorting" /></td>
+        <td><input type="text" value="Sort animal figures by type" /></td>
+        <td><input type="text" value="Use manipulatives and charts" /></td>
+      </tr>
+      <tr>
+        <td>Science</td>
+        <td><input type="text" value="Explore habitats" /></td>
+        <td><input type="text" value="Watch videos and draw habitats" /></td>
+        <td><input type="text" value="Nature walk optional" /></td>
+      </tr>
+      <tr>
+        <td>Art</td>
+        <td><input type="text" value="Creative expression" /></td>
+        <td><input type="text" value="Make animal masks" /></td>
+        <td><input type="text" value="Use paper plates and paint" /></td>
+      </tr>
+      <tr>
+        <td>PE</td>
+        <td><input type="text" value="Movement and coordination" /></td>
+        <td><input type="text" value="Animal motion games" /></td>
+        <td><input type="text" value="Jump like frogs, crawl like bears" /></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="print-builder" onclick="printSection('week3-builder')">🖨️ Print Week 3 Plan</button>
+</div>
+<div style="display:flex; gap:0.5rem; margin-top:0.75rem;">
+  <button class="print-builder export-button">💾 Export PDF</button>
+  <button class="print-builder clear-button" style="background:#ef4444;">🧹 Clear All</button>
+</div>
+
+<!-- Monthly Summary View -->
+<h2>🗓️ Monthly Summary</h2>
+<p>Select a month to see all weekly goals and activities in one place. You can print or save as PDF.</p>
+
+<div id="monthly-summary-controls" style="display:flex; gap:0.75rem; align-items:center; margin-bottom:0.75rem;">
+  <label for="monthSelect"><strong>Month:</strong></label>
+  <select id="monthSelect">
+    <option value="September">September</option>
+    <option value="October">October</option>
+    <option value="November">November</option>
+    <option value="December">December</option>
+    <option value="January">January</option>
+    <option value="February">February</option>
+    <option value="March">March</option>
+    <option value="April">April</option>
+    <option value="May">May</option>
+  </select>
+  <button class="print" onclick="printSection('monthly-summary')">🖨️ Print/Export PDF</button>
+</div>
+
+<div id="monthly-summary" class="builder" aria-live="polite">
+  <h3>Monthly overview</h3>
+  <p>Select a month to view the combined weekly plan.</p>
+</div>
+
+
+  <a href="index.html" class="back-link">🏠 Back to Home</a>
+
+  <footer style="text-align: center; margin-top: 3rem;">
     <p>Made with ❤️ by Khai for Sebastian</p>
   </footer>
+
+<script>
+  // =========================
+  // UI toggles
+  // =========================
+  function toggleSection(header) {
+    const body = header.nextElementSibling;
+    body.style.display = body.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function toggleAll() {
+    const bodies = document.querySelectorAll('.collapsible-body');
+    const anyClosed = Array.from(bodies).some(body => body.style.display === 'none');
+    bodies.forEach(body => {
+      body.style.display = anyClosed ? 'block' : 'none';
+    });
+  }
+
+  // =========================
+  // Search filter
+  // =========================
+  function filterContent() {
+    const query = (document.getElementById('searchBox')?.value || '').toLowerCase();
+    document.querySelectorAll('.collapsible').forEach(section => {
+      const header = section.querySelector('.collapsible-header')?.textContent.toLowerCase() || '';
+      const bodyText = section.querySelector('.collapsible-body')?.textContent.toLowerCase() || '';
+      section.style.display = (header.includes(query) || bodyText.includes(query)) ? 'block' : 'none';
+    });
+  }
+
+  // =========================
+  // Print / Export-to-PDF
+  // =========================
+  function printSection(sectionId) {
+    const originalContent = document.body.innerHTML;
+    const sectionEl = document.getElementById(sectionId);
+    if (!sectionEl) return;
+
+    const section = sectionEl.innerHTML;
+    document.body.innerHTML = `
+      <html>
+        <head>
+          <title>Print</title>
+          <style>
+            * { box-sizing: border-box; }
+            body { font-family: system-ui, sans-serif; padding: 2rem; color: #111827; }
+            h1, h2, h3 { margin: 0.2rem 0 0.6rem; }
+            table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+            th, td { border: 1px solid #ccc; padding: 0.6rem; text-align: left; vertical-align: top; }
+            th { background: #f1f5f9; }
+            .meta { color: #6b7280; font-size: 0.9rem; margin-bottom: 0.5rem; }
+          </style>
+        </head>
+        <body>${section}</body>
+      </html>
+    `;
+    window.print();
+    document.body.innerHTML = originalContent;
+    location.reload();
+  }
+
+  // Optional helper if you want a semantic name per week button
+  function exportWeekToPDF(weekId) {
+    printSection(weekId);
+  }
+
+  // =========================
+  // Local storage (multi-week)
+  // =========================
+  function saveBuilderInputs(weekId) {
+    const inputs = document.querySelectorAll(`#${weekId} input[type="text"]`);
+    const data = Array.from(inputs).map(input => input.value);
+    localStorage.setItem(`${weekId}-data`, JSON.stringify(data));
+  }
+
+  function loadBuilderInputs(weekId) {
+    const saved = localStorage.getItem(`${weekId}-data`);
+    if (saved) {
+      const data = JSON.parse(saved);
+      const inputs = document.querySelectorAll(`#${weekId} input[type="text"]`);
+      inputs.forEach((input, i) => {
+        input.value = data[i] || '';
+      });
+    }
+  }
+
+  function clearBuilderInputs(weekId) {
+    const inputs = document.querySelectorAll(`#${weekId} input[type="text"]`);
+    inputs.forEach(input => { input.value = ''; });
+    localStorage.removeItem(`${weekId}-data`);
+  }
+
+  // =========================
+  // Multi-week tabs
+  // =========================
+  function showWeekTab(weekId) {
+    document.querySelectorAll('.weekly-tab').forEach(tab => {
+      tab.style.display = tab.id === weekId ? 'block' : 'none';
+    });
+  }
+
+  // =========================
+  // Monthly summary builder
+  // =========================
+  // Map each weekly builder to its month, week number, and theme title.
+  // Add more entries as you add more weekly builders.
+  const WEEK_META = {
+    'week3-builder': { month: 'September', week: 3, theme: 'Animals and Habitats' },
+    'week4-builder': { month: 'September', week: 4, theme: 'Community Helpers' }
+    // Example for October:
+    // 'week5-builder': { month: 'October', week: 5, theme: 'Plants and Gardening' },
+    // 'week6-builder': { month: 'October', week: 6, theme: 'Transportation' },
+  };
+
+  // Extract structured data from a given weekly builder table
+  function getWeekData(weekId) {
+    const container = document.getElementById(weekId);
+    if (!container) return [];
+    const rows = container.querySelectorAll('tbody tr');
+    const data = [];
+
+    rows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+      if (cells.length < 4) return;
+      const subject = cells[0].textContent.trim();
+      const goal = cells[1].querySelector('input')?.value.trim() || '';
+      const activity = cells[2].querySelector('input')?.value.trim() || '';
+      const notes = cells[3].querySelector('input')?.value.trim() || '';
+      data.push({ subject, goal, activity, notes });
+    });
+
+    return data;
+  }
+
+  // Build and render the monthly summary table
+  function buildMonthlySummary(month) {
+    const summaryEl = document.getElementById('monthly-summary');
+    if (!summaryEl) return;
+
+    const entries = Object.entries(WEEK_META)
+      .filter(([, meta]) => meta.month === month)
+      .map(([weekId, meta]) => ({ weekId, ...meta }))
+      .sort((a, b) => a.week - b.week);
+
+    if (entries.length === 0) {
+      summaryEl.innerHTML = `
+        <h3>Monthly overview</h3>
+        <p class="meta">No weekly plans found for ${month}. Add weekly builders and update WEEK_META.</p>
+      `;
+      return;
+    }
+
+    // Build HTML
+    let html = `<h3>${month} overview</h3>`;
+    entries.forEach(entry => {
+      const weekData = getWeekData(entry.weekId);
+      html += `
+        <div class="weekly-summary-block" style="margin-top:1rem;">
+          <div class="meta"><strong>Week ${entry.week}:</strong> ${entry.theme}</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Subject</th>
+                <th>Goal</th>
+                <th>Activity</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${weekData.map(row => `
+                <tr>
+                  <td>${escapeHtml(row.subject)}</td>
+                  <td>${escapeHtml(row.goal)}</td>
+                  <td>${escapeHtml(row.activity)}</td>
+                  <td>${escapeHtml(row.notes)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    });
+
+    summaryEl.innerHTML = html;
+  }
+
+  // Simple HTML escaper for safety in summary rendering
+  function escapeHtml(str) {
+    return (str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // =========================
+  // Initialization
+  // =========================
+  document.addEventListener('DOMContentLoaded', () => {
+    // Open all collapsibles initially
+    document.querySelectorAll('.collapsible-body').forEach(body => {
+      body.style.display = 'block';
+    });
+
+    // Weeks to initialize. Add new builder IDs here as you create them.
+    const weekIds = Object.keys(WEEK_META);
+
+    // Load saved inputs and wire up events
+    weekIds.forEach(weekId => {
+      loadBuilderInputs(weekId);
+
+      document.querySelectorAll(`#${weekId} input[type="text"]`).forEach(input => {
+        input.addEventListener('input', () => saveBuilderInputs(weekId));
+      });
+
+      const clearBtn = document.querySelector(`#${weekId} .clear-button`);
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          clearBuilderInputs(weekId);
+          // Rebuild summary if the current month includes this week
+          const currentMonth = document.getElementById('monthSelect')?.value;
+          if (currentMonth && WEEK_META[weekId]?.month === currentMonth) {
+            buildMonthlySummary(currentMonth);
+          }
+        });
+      }
+
+      const exportBtn = document.querySelector(`#${weekId} .export-button`);
+      if (exportBtn) {
+        exportBtn.addEventListener('click', () => exportWeekToPDF(weekId));
+      }
+    });
+
+    // Month select dropdown -> rebuild summary
+    const monthSelect = document.getElementById('monthSelect');
+    if (monthSelect) {
+      monthSelect.addEventListener('change', () => buildMonthlySummary(monthSelect.value));
+      // Default selection
+      buildMonthlySummary(monthSelect.value || 'September');
+    }
+
+    // Tab buttons for weekly planner (if present)
+    document.querySelectorAll('.week-tab-button').forEach(button => {
+      button.addEventListener('click', () => {
+        showWeekTab(button.dataset.weekTarget);
+      });
+    });
+  });
+</script>
+
+
+
+
 </body>
 </html>
