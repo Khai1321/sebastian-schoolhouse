@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🧭 Sebastian’s Weekly Explorer</title>
+
+  <!-- Inline styles for a drop-in page. If you prefer, you can move these to style.css. -->
+  <style>
+    :root{
+      --brand-blue:#2563eb;
+      --brand-blue-dark:#1d4ed8;
+      --ink:#1e3a8a;
+      --text:#334155;
+      --muted:#64748b;
+      --panel:#ffffff;
+      --shadow:0 4px 12px rgba(0,0,0,0.06);
+      --shadow-lg:0 8px 20px rgba(0,0,0,0.08);
+      --radius:12px;
+    }
+
+    body{
+      margin:0;
+      padding:2rem;
+      font-family:system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji", "Segoe UI Symbol";
+      background:#f9fbfc;
+      color:#1f2937;
+    }
+
+    a.button, button{
+      display:inline-block;
+      padding:0.65rem 1rem;
+      border-radius:8px;
+      font-weight:700;
+      text-decoration:none;
+      border:none;
+      cursor:pointer;
+      background:var(--brand-blue);
+      color:white;
+    }
+    a.button:hover, button:hover{ background:var(--brand-blue-dark); }
+
+    /* Explorer container card */
+    .explorer-card{
+      padding:2rem;
+      background:linear-gradient(135deg, #e0f2fe, #f0f9ff);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      margin-bottom:2rem;
+    }
+
+    .weekly-explorer h1{
+      font-size:2rem;
+      color:var(--ink);
+      margin:0 0 0.5rem 0;
+      text-align:center;
+    }
+    .weekly-explorer .description{
+      font-size:1rem;
+      color:#475569;
+      text-align:center;
+      margin:0 auto 1.5rem auto;
+      max-width:60ch;
+    }
+
+    /* Controls row */
+    .controls{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:center;
+      gap:1rem;
+      margin:1rem 0 1.5rem 0;
+    }
+    .control{
+      background:#ffffff;
+      border:1px solid #e5e7eb;
+      border-radius:10px;
+      padding:0.5rem 0.75rem;
+      box-shadow:var(--shadow);
+      display:flex;
+      align-items:center;
+      gap:0.5rem;
+    }
+    .control label{
+      font-weight:700;
+      color:#0f172a;
+    }
+    .control select{
+      border:1px solid #cbd5e1;
+      border-radius:8px;
+      padding:0.4rem 0.6rem;
+      background:#fff;
+      color:#0f172a;
+    }
+
+    /* Progress tracker */
+    .progress-tracker{
+      text-align:center;
+      margin:0.5rem 0 1.75rem 0;
+      color:var(--ink);
+      font-weight:700;
+    }
+    .progress-bar{
+      height:12px;
+      background:#e5e7eb;
+      border-radius:6px;
+      overflow:hidden;
+      margin:0.5rem auto 0 auto;
+      max-width:560px;
+    }
+    .progress-fill{
+      height:100%;
+      background:var(--brand-blue);
+      width:0%;
+      transition:width 0.4s ease;
+    }
+
+    /* Grid */
+    .week-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));
+      gap:1.25rem;
+    }
+
+    /* Week card */
+    .week-card{
+      background:var(--panel);
+      border:1px solid #dbeafe;
+      border-radius:var(--radius);
+      padding:1rem;
+      text-align:center;
+      box-shadow:var(--shadow);
+      transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+      position:relative;
+    }
+    .week-card:hover{
+      transform:translateY(-2px);
+      box-shadow:var(--shadow-lg);
+    }
+
+    .week-icon{
+      width:60px;
+      height:auto;
+      margin-bottom:0.5rem;
+    }
+    .week-title{
+      font-size:1.1rem;
+      color:var(--ink);
+      margin:0.25rem 0 0.5rem 0;
+    }
+    .week-sub{
+      font-size:0.9rem;
+      color:var(--muted);
+      margin:0 0 0.5rem 0;
+    }
+
+    .week-links a{
+      display:block;
+      margin:0.25rem 0;
+      color:var(--brand-blue);
+      font-weight:700;
+      text-decoration:none;
+    }
+    .week-links a:hover{ text-decoration:underline; }
+
+    /* Completion toggle */
+    .complete-toggle{
+      margin-top:0.6rem;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:0.5rem;
+      font-size:0.9rem;
+      color:#0f172a;
+    }
+    .complete-toggle input{ transform:translateY(1px); }
+
+    .week-card.completed{
+      border-color:#34d399;
+      box-shadow:0 0 0 2px rgba(52,211,153,0.15), var(--shadow);
+    }
+
+    /* Month theme accents */
+    .week-card.month-september{ background:#eef6ff; border-color:#93c5fd; }
+    .week-card.month-october{ background:#fff7ed; border-color:#fdba74; }
+    .week-card.month-november{ background:#fffbeb; border-color:#fcd34d; }
+    .week-card.month-december{ background:#f0f9ff; border-color:#93c5fd; }
+    .week-card.month-january{ background:#f8fafc; border-color:#cbd5e1; }
+    .week-card.month-february{ background:#fff1f2; border-color:#fda4af; }
+    .week-card.month-march{ background:#ecfdf5; border-color:#86efac; }
+    .week-card.month-april{ background:#f5f3ff; border-color:#c4b5fd; }
+    .week-card.month-may{ background:#f0fdf4; border-color:#86efac; }
+    .week-card.month-june{ background:#fffbeb; border-color:#fde68a; }
+
+    /* Back link */
+    .back-link{
+      display:inline-block;
+      margin-top:2rem;
+      text-decoration:none;
+      background:var(--brand-blue);
+      color:white;
+      padding:0.6rem 1rem;
+      border-radius:8px;
+      font-weight:700;
+    }
+
+    /* Small screens */
+    @media (max-width:480px){
+      body{ padding:1rem; }
+      .explorer-card{ padding:1.25rem; }
+      .weekly-explorer h1{ font-size:1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <section class="explorer-card weekly-explorer">
+    <h1>🧭 Sebastian’s Weekly Explorer</h1>
+    <p class="description">Click into each week to discover themed adventures, joyful learning, and magical moments!</p>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="control">
+        <label for="month-filter">Filter by month:</label>
+        <select id="month-filter" aria-label="Filter weeks by month">
+          <option value="all">All</option>
+          <option value="september">September</option>
+          <option value="october">October</option>
+          <option value="november">November</option>
+          <option value="december">December</option>
+          <option value="january">January</option>
+          <option value="february">February</option>
+          <option value="march">March</option>
+          <option value="april">April</option>
+          <option value="may">May</option>
+          <option value="june">June</option>
+        </select>
+      </div>
+      <div class="control">
+        <label for="search-input">Search theme:</label>
+        <input id="search-input" type="text" placeholder="Type to search (e.g., pumpkins)" aria-label="Search by theme" />
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-tracker">
+      <p>🎯 You’ve explored <span id="completed-count">0</span> of 36 weeks!</p>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="week-grid" id="week-grid">
+
+      <!-- September: Weeks 1–4 -->
+      <div class="week-card month-september" data-week="1" data-month="september" data-theme="All About Me">
+        <img src="icons/week1.png" alt="All About Me icon" class="week-icon" />
+        <h3 class="week-title">Week 1: All About Me</h3>
+        <p class="week-sub">Identity, family, self-expression</p>
+        <div class="week-links">
+          <a href="week1-schedule.html">📅 Daily Schedule</a>
+          <a href="week1-lesson.html">📘 Lesson Plan</a>
+        </div>
+        <label class="complete-toggle">
+          <input type="checkbox" class="complete-checkbox" /> Mark as completed
+        </label>
+      </div>
+
+      <div class="week-card month-september" data-week="2" data-month="september" data-theme="My School & Friends">
+        <img src="icons/week2.png" alt="School & Friends icon" class="week-icon" />
+        <h3 class="week-title">Week 2: My School & Friends</h3>
+        <p class="week-sub">Routines, friendship, teamwork</p>
+        <div class="week-links">
+          <a href="week2-schedule.html">📅 Daily Schedule</a>
+          <a href="week2-lesson.html">📘 Lesson Plan</a>
+        </div>
+        <label class="complete-toggle">
+          <input type="checkbox" class="complete-checkbox" /> Mark as completed
+        </label>
+      </div>
+
+      <div class="week-card month-september" data-week="3" data-month="september" data-theme="Animals and Habitats">
+        <img src="icons/week3.png" alt="Animals icon" class="week-icon" />
+        <h3 class="week-title">Week 3: Animals & Habitats</h3>
+        <p class="week-sub">Creatures, homes, adaptations</p>
+        <div class="week-links">
+          <a href="daily-schedule.html#week-3">📅 Daily Schedule</a>
+          <a href="week3-lesson.html">📘 Lesson Plan</a>
+        </div>
+        <label class="complete-toggle">
+          <input type="checkbox" class="complete-checkbox" /> Mark as completed
+        </label>
+      </div>
+
+      <div class="week-card month-september" data-week="4" data-month="september" data-theme="Community Helpers">
+        <img src="icons/week4.png" alt="Community icon" class="week-icon" />
+        <h3 class="week-title">Week 4: Community Helpers</h3>
+        <p class="week-sub">Jobs, roles, safety</p>
+        <div class="week-links">
+          <a href="daily-schedule.html#week-4">📅 Daily Schedule</a>
+          <a href="week4-lesson.html">📘 Lesson Plan</a>
+        </div>
+        <label class="complete-toggle">
+          <input type="checkbox" class="complete-checkbox" /> Mark as completed
+        </label>
+      </div>
+
+      <!-- October: Weeks 5–8 -->
+      <div class="week-card month-october" data-week="5" data-month="october" data-theme="Autumn & Leaves">
+        <img src="icons/week5.png" alt="Autumn icon" class="week-icon" />
+        <h3 class="week-title">Week 5: Autumn & Leaves</h3>
+        <p class="week-sub">Seasons, colors, nature walks</p>
+        <div class="week-links">
+          <a href="week5-schedule.html">📅 Daily Schedule</a>
+          <a href="week5-lesson.html">📘 Lesson Plan</a>
+        </div>
+        <label class="complete-toggle">
+          <input type="checkbox" class="complete-checkbox" /> Mark as completed
+        </label>
+      </div>
+
+      <div class="week-card month-october" data-week="6" data-month="october" data-theme="Fire Safety">
+        <img src="icons/week6.png" alt="Fire safety icon" class="week-icon" />
+        <h3 class="week-title">Week 6: Fire Safety</h3>
+        <p class="week-sub">Prevention, tools, drills</p>
+        <div class="week-links">
+          <a href="week6-schedule.html">📅 Daily Schedule</a>
+          <a href="week6-lesson.html">📘 Lesson Plan</a>
+        </div>
+        <label class="complete-toggle">
+          <input type="checkbox" class="complete-checkbox" /> Mark as completed
+        </label>
+      </div>
+
+      <div class="week-card month-october" data-week="7" data-month="october" data-theme="Pumpkins & Harvest">
+        <img src="icons/week7.png" alt="Pumpkin icon" class="week-icon" />
+        <h3 class="week-title">Week 7: Pumpkins & Harvest</h3>
+        <p class="week-sub">Growing, measuring, celebrating</p>
+        <div class="week-links">
+          <a href="week7-schedule.html">📅 Daily Schedule</a>
+          <a href="week7-lesson.html">📘 Lesson Plan</a>
+        </div>
+        <label class="complete-toggle">
+          <input type="checkbox" class="complete-checkbox" /> Mark as completed
+        </label>
+      </div>
+
+      <div class="week-card month-october" data-week="8" data-month="october" data-theme="Halloween & Imagination">
+        <img src="icons/week8.png" alt="Halloween icon" class="week-icon" />
+        <h3 class="week-title">Week 8: Halloween & Imagination</h3>
+        <p class="week-sub">Stories, costumes, creativity</p>
+        <div class="week-links">
+          <a href="week8-schedule.html">📅 Daily Schedule</a>
+          <a href="week8-lesson.html">📘 Lesson Plan</a>
+        </div>
+        <label class="complete-toggle">
+          <input type="checkbox" class="complete-checkbox" /> Mark as completed
+        </label>
+      </div>
+
+<section class="explorer-card weekly-explorer">
+  <h1>🧭 Sebastian’s Weekly Explorer</h1>
+  <p class="description">Click into each week to discover themed adventures, joyful learning, and magical moments!</p>
+
+  <!-- Controls -->
+  <div class="controls">
+    <div class="control">
+      <label for="month-filter">Filter by month:</label>
+      <select id="month-filter">
+        <option value="all">All</option>
+        <option value="september">September</option>
+        <option value="october">October</option>
+        <option value="november">November</option>
+        <option value="december">December</option>
+        <option value="january">January</option>
+        <option value="february">February</option>
+        <option value="march">March</option>
+        <option value="april">April</option>
+        <option value="may">May</option>
+        <option value="june">June</option>
+      </select>
+    </div>
+    <div class="control">
+      <label for="search-input">Search theme:</label>
+      <input id="search-input" type="text" placeholder="e.g. pumpkins or animals" />
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-tracker">
+    <p>🎯 You’ve explored <span id="completed-count">0</span> of 36 weeks!</p>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="week-grid" id="week-grid">
+
+    <!-- Week 1 -->
+    <div class="week-card month-september" data-week="1" data-month="september" data-theme="All About Me">
+      <img src="icons/week1.png" alt="Week 1 icon" class="week-icon" />
+      <h3 class="week-title">Week 1: All About Me</h3>
+      <p class="week-sub">Identity, family, self-expression</p>
+      <div class="week-links">
+        <a href="week1-schedule.html">📅 Daily Schedule</a>
+        <a href="week1-lesson.html">📘 Lesson Plan</a>
+      </div>
+      <label class="complete-toggle">
+        <input type="checkbox" class="complete-checkbox" /> Mark as completed
+      </label>
+    </div>
+
+    <!-- Week 2 -->
+    <div class="week-card month-september" data-week="2" data-month="september" data-theme="My School & Friends">
+      <img src="icons/week2.png" alt="Week 2 icon" class="week-icon" />
+      <h3 class="week-title">Week 2: My School & Friends</h3>
+      <p class="week-sub">Routines, friendship, teamwork</p>
+      <div class="week-links">
+        <a href="week2-schedule.html">📅 Daily Schedule</a>
+        <a href="week2-lesson.html">📘 Lesson Plan</a>
+      </div>
+      <label class="complete-toggle">
+        <input type="checkbox" class="complete-checkbox" /> Mark as completed
+      </label>
+    </div>
+
+    <!-- Week 3 -->
+    <div class="week-card month-september" data-week="3" data-month="september" data-theme="Animals & Habitats">
+      <img src="icons/week3.png" alt="Week 3 icon" class="week-icon" />
+      <h3 class="week-title">Week 3: Animals & Habitats</h3>
+      <p class="week-sub">Creatures, homes, adaptations</p>
+      <div class="week-links">
+        <a href="week3-schedule.html">📅 Daily Schedule</a>
+        <a href="week3-lesson.html">📘 Lesson Plan</a>
+      </div>
+      <label class="complete-toggle">
+        <input type="checkbox" class="complete-checkbox" /> Mark as completed
+      </label>
+    </div>
+
+    <!-- Week 4 -->
+    <div class="week-card month-september" data-week="4" data-month="september" data-theme="Community Helpers">
+      <img src="icons/week4.png" alt="Week 4 icon" class="week-icon" />
+      <h3 class="week-title">Week 4: Community Helpers</h3>
+      <p class="week-sub">Jobs, roles, safety</p>
+      <div class="week-links">
+        <a href="week4-schedule.html">📅 Daily Schedule</a>
+        <a href="week4-lesson.html">📘 Lesson Plan</a>
+      </div>
+      <label class="complete-toggle">
+        <input type="checkbox" class="complete-checkbox" /> Mark as completed
+      </label>
+    </div>
+
+    <!-- Week 5 -->
+    <div class="week-card month-october" data-week="5" data-month="october" data-theme="Autumn & Leaves">
+      <img src="icons/week5.png" alt="Week 5 icon" class="week-icon" />
+      <h3 class="week-title">Week 5: Autumn & Leaves</h3>
+      <p class="week-sub">Seasons, colors, nature walks</p>
+      <div class="week-links">
+        <a href="week5-schedule.html">📅 Daily Schedule</a>
+        <a href="week5-lesson.html">📘 Lesson Plan</a>
+      </div>
+      <label class="complete-toggle">
+        <input type="checkbox" class="complete-checkbox" /> Mark as completed
+      </label>
+    </div>
+
+    <!-- Week 6 -->
+    <div class="week-card month-october" data-week="6" data-month="october" data-theme="Fire Safety">
+      <img src="icons/week6.png" alt="Week 6 icon" class="week-icon" />
+      <h3 class="week-title">Week 6: Fire Safety</h3>
+      <p class="week-sub">Prevention, tools, drills</p>
+      <div class="week-links">
+        <a href="week6-schedule.html">📅 Daily Schedule</a>
+        <a href="week6-lesson.html">📘 Lesson Plan</a>
+      </div>
+      <label class="complete-toggle">
+        <input type="checkbox" class="complete-checkbox" /> Mark as completed
+      </label>
+    </div>
+
+    <!-- Week 7 -->
+    <div class="week-card month-october" data-week="7" data-month="october" data-theme="Pumpkins & Harvest">
+      <img src="icons/week7.png" alt="Week 7 icon" class="week-icon" />
+      <h3 class="week-title">Week 7: Pumpkins & Harvest</h3>
+      <p class="week-sub">Growing, measuring, celebrating</p>
+      <div class="week-links">
+        <a href="week7-schedule.html">📅 Daily Schedule</a>
+        <a href="week7-lesson.html">📘 Lesson Plan</a>
+      </div>
+      <label class="complete-toggle">
+        <input type="checkbox" class="complete-checkbox" /> Mark as completed
+      </label>
+    </div>
+
+    <!-- Week 8 -->
+    <div class="week-card month-october" data-week="8" data-month="october" data-theme="Halloween & Imagination">
+      <img src="icons/week8.png" alt="Week 8 icon" class="week-icon" />
+      <h3 class="week-title">Week 8: Halloween & Imagination</h3>
+      <p class="week-sub">Stories, costumes, creativity</p>
+      <div class="week-links">
+        <a href="week8-schedule.html">📅 Daily Schedule</a>
+        <a href="week8-lesson.html">📘 Lesson Plan</a>
+      </div>
+      <label class="complete-toggle">
+        <input type="checkbox" class="complete-checkbox" /> Mark as completed
+      </label>
+    </div>
+
+    <!-- Repeat for Weeks 9–36 using same structure -->
+
+  </div>
+</section>
+
+
+    </div>
+  </section>
+
+  <a href="index.html" class="back-link">⬅️ Back to Home</a>
+
+  <footer style="text-align:center; margin-top:2.25rem;">
+    <p>Made with ❤️ by Khai for Sebastian</p>
+  </footer>
+
+  <!-- JSON data for all 36 weeks -->
+  <script>
+    const weeksData = [
+  { "week": 9, "title": "Harvest & Gratitude", "theme": "Thankfulness, food, celebration", "month": "november", "icon": "icons/week9.png", "scheduleLink": "week9-schedule.html", "lessonLink": "week9-lesson.html" },
+  { "week": 10, "title": "Native American Heritage", "theme": "Culture, history, storytelling", "month": "november", "icon": "icons/week10.png", "scheduleLink": "week10-schedule.html", "lessonLink": "week10-lesson.html" },
+  { "week": 11, "title": "Winter Weather", "theme": "Snow, temperature, clothing", "month": "december", "icon": "icons/week11.png", "scheduleLink": "week11-schedule.html", "lessonLink": "week11-lesson.html" },
+  { "week": 12, "title": "Winter Animals", "theme": "Hibernation, migration, adaptation", "month": "december", "icon": "icons/week12.png", "scheduleLink": "week12-schedule.html", "lessonLink": "week12-lesson.html" },
+  { "week": 13, "title": "Celebrations Around the World", "theme": "Traditions, lights, unity", "month": "december", "icon": "icons/week13.png", "scheduleLink": "week13-schedule.html", "lessonLink": "week13-lesson.html" },
+  { "week": 14, "title": "New Year & Goals", "theme": "Reflection, dreams, resolutions", "month": "january", "icon": "icons/week14.png", "scheduleLink": "week14-schedule.html", "lessonLink": "week14-lesson.html" },
+  { "week": 15, "title": "Snow & Ice", "theme": "States of matter, winter play", "month": "january", "icon": "icons/week15.png", "scheduleLink": "week15-schedule.html", "lessonLink": "week15-lesson.html" },
+  { "week": 16, "title": "Arctic Exploration", "theme": "Polar animals, geography, cold climates", "month": "january", "icon": "icons/week16.png", "scheduleLink": "week16-schedule.html", "lessonLink": "week16-lesson.html" },
+  { "week": 17, "title": "Friendship & Kindness", "theme": "Empathy, sharing, love", "month": "february", "icon": "icons/week17.png", "scheduleLink": "week17-schedule.html", "lessonLink": "week17-lesson.html" },
+  { "week": 18, "title": "Black History Month", "theme": "Leaders, stories, impact", "month": "february", "icon": "icons/week18.png", "scheduleLink": "week18-schedule.html", "lessonLink": "week18-lesson.html" },
+  { "week": 19, "title": "Dental Health", "theme": "Teeth, hygiene, smiles", "month": "february", "icon": "icons/week19.png", "scheduleLink": "week19-schedule.html", "lessonLink": "week19-lesson.html" },
+  { "week": 20, "title": "Weather & Seasons", "theme": "Rain, sun, wind, clouds", "month": "march", "icon": "icons/week20.png", "scheduleLink": "week20-schedule.html", "lessonLink": "week20-lesson.html" },
+  { "week": 21, "title": "Rainbows & Colors", "theme": "Light, mixing, joy", "month": "march", "icon": "icons/week21.png", "scheduleLink": "week21-schedule.html", "lessonLink": "week21-lesson.html" },
+  { "week": 22, "title": "Plants & Gardens", "theme": "Growth, soil, seeds", "month": "march", "icon": "icons/week22.png", "scheduleLink": "week22-schedule.html", "lessonLink": "week22-lesson.html" },
+  { "week": 23, "title": "Spring & New Life", "theme": "Animals, flowers, renewal", "month": "april", "icon": "icons/week23.png", "scheduleLink": "week23-schedule.html", "lessonLink": "week23-lesson.html" },
+  { "week": 24, "title": "Insects & Bugs", "theme": "Creepy crawlies, habitats", "month": "april", "icon": "icons/week24.png", "scheduleLink": "week24-schedule.html", "lessonLink": "week24-lesson.html" },
+  { "week": 25, "title": "Earth Day & Nature", "theme": "Recycling, trees, caring", "month": "april", "icon": "icons/week25.png", "scheduleLink": "week25-schedule.html", "lessonLink": "week25-lesson.html" },
+  { "week": 26, "title": "Transportation", "theme": "Cars, trains, planes", "month": "may", "icon": "icons/week26.png", "scheduleLink": "week26-schedule.html", "lessonLink": "week26-lesson.html" },
+  { "week": 27, "title": "Jobs & Careers", "theme": "Dreams, roles, community", "month": "may", "icon": "icons/week27.png", "scheduleLink": "week27-schedule.html", "lessonLink": "week27-lesson.html" },
+  { "week": 28, "title": "Space & Stars", "theme": "Planets, astronauts, wonder", "month": "may", "icon": "icons/week28.png", "scheduleLink": "week28-schedule.html", "lessonLink": "week28-lesson.html" },
+  { "week": 29, "title": "Ocean Life", "theme": "Fish, waves, exploration", "month": "june", "icon": "icons/week29.png", "scheduleLink": "week29-schedule.html", "lessonLink": "week29-lesson.html" },
+  { "week": 30, "title": "Summer Safety", "theme": "Sun, water, play", "month": "june", "icon": "icons/week30.png", "scheduleLink": "week30-schedule.html", "lessonLink": "week30-lesson.html" },
+  { "week": 31, "title": "Camping & Outdoors", "theme": "Tents, trails, nature", "month": "june", "icon": "icons/week31.png", "scheduleLink": "week31-schedule.html", "lessonLink": "week31-lesson.html" },
+  { "week": 32, "title": "Fairy Tales & Fantasy", "theme": "Magic, stories, imagination", "month": "june", "icon": "icons/week32.png", "scheduleLink": "week32-schedule.html", "lessonLink": "week32-lesson.html" },
+  { "week": 33, "title": "Music & Movement", "theme": "Rhythm, dance, joy", "month": "june", "icon": "icons/week33.png", "scheduleLink": "week33-schedule.html", "lessonLink": "week33-lesson.html" },
+  { "week": 34, "title": "Review & Reflection", "theme": "Favorites, memories, growth", "month": "june", "icon": "icons/week34.png", "scheduleLink": "week34-schedule.html", "lessonLink": "week34-lesson.html" },
+  { "week": 35, "title": "Celebration Week", "theme": "Games, awards, joy", "month": "june", "icon": "icons/week35.png", "scheduleLink": "week35-schedule.html", "lessonLink": "week35-lesson.html" },
+  { "week": 36, "title": "Goodbye & Summer Fun", "theme": "Farewell, excitement, transition", "month": "june", "icon": "icons/week36.png", "scheduleLink": "week36-schedule.html", "lessonLink": "week36-lesson.html" }
+];
+  </script>
+
+  <!-- Generator script to build week cards -->
+  <script>
+    const weekGrid = document.getElementById("week-grid");
+
+    weeksData.forEach(week => {
+      const card = document.createElement("div");
+      card.className = `week-card month-${week.month}`;
+      card.setAttribute("data-week", week.week);
+      card.setAttribute("data-month", week.month);
+      card.setAttribute("data-theme", week.title);
+
+      card.innerHTML = `
+        <img src="${week.icon}" alt="Week ${week.week} icon" class="week-icon" />
+        <h3 class="week-title">Week ${week.week}: ${week.title}</h3>
+        <p class="week-sub">${week.theme}</p>
+        <div class="week-links">
+          <a href="${week.scheduleLink}">📅 Daily Schedule</a>
+          <a href="${week.lessonLink}">📘 Lesson Plan</a>
+        </div>
+        <label class="complete-toggle">
+          <input type="checkbox" class="complete-checkbox" /> Mark as completed
+        </label>
+      `;
+
+      weekGrid.appendChild(card);
+    });
+  </script>
+
+  <!-- Completion tracking, filters, and progress -->
+  <script>
+    const STORAGE_KEY = 'weeklyExplorer.completedWeeks.v1';
+
+    function loadCompletedSet(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return new Set(raw ? JSON.parse(raw) : []);
+      }catch(e){ return new Set(); }
+    }
+
+    function saveCompletedSet(set){
+      try{
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(set)));
+      }catch(e){}
+    }
+
+    function updateProgress(){
+      const cards = document.querySelectorAll('.week-card');
+      const completed = Array.from(cards).filter(c => c.classList.contains('completed')).length;
+      const total = 36;
+      const pct = Math.round((completed / total) * 100);
+      document.getElementById('completed-count').textContent = completed.toString();
+      document.getElementById('progress-fill').style.width = pct + '%';
+    }
+
+    function applyFilters(){
+      const month = document.getElementById('month-filter').value;
+      const q = document.getElementById('search-input').value.trim().toLowerCase();
+      const cards = document.querySelectorAll('.week-card');
+
+      cards.forEach(card => {
+        const matchesMonth = (month === 'all') || card.classList.contains(`month-${month}`);
+        const theme = (card.dataset.theme || '').toLowerCase();
+        const title = (card.querySelector('.week-title')?.textContent || '').toLowerCase();
+        const matchesSearch = !q || theme.includes(q) || title.includes(q);
+
+        card.style.display = (matchesMonth && matchesSearch) ? 'block' : 'none';
+      });
+    }
+
+    function wireCompletion(){
+      const completed = loadCompletedSet();
+      const cards = document.querySelectorAll('.week-card');
+
+      cards.forEach(card => {
+        const weekNum = card.dataset.week;
+        const checkbox = card.querySelector('.complete-checkbox');
+
+        if (completed.has(weekNum)){
+          card.classList.add('completed');
+          if (checkbox) checkbox.checked = true;
+        }
+
+        if (checkbox){
+          checkbox.addEventListener('change', () => {
+            if (checkbox.checked){
+              completed.add(weekNum);
+              card.classList.add('completed');
+            } else {
+              completed.delete(weekNum);
+              card.classList.remove('completed');
+            }
+            saveCompletedSet(completed);
+            updateProgress();
+          });
+        }
+      });
+    }
+
+    function wireFilters(){
+      const monthEl = document.getElementById('month-filter');
+      const searchEl = document.getElementById('search-input');
+      monthEl.addEventListener('change', applyFilters);
+      searchEl.addEventListener('input', applyFilters);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      wireCompletion();
+      wireFilters();
+      applyFilters();
+      updateProgress();
+    });
+  </script>
+
+</body>
+</html>

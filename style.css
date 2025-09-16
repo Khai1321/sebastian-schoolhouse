@@ -185,3 +185,78 @@ footer {
     align-items: flex-start;
   }
 }
+/* Explorer Page Container */
+.explorer-card {
+  padding: 2rem;
+  background: linear-gradient(to bottom right, #e0f2fe, #f0f9ff);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 2rem;
+}
+
+/* Weekly Explorer Header */
+.weekly-explorer h1 {
+  font-size: 2rem;
+  color: #1e3a8a;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.weekly-explorer .description {
+  font-size: 1rem;
+  color: #475569;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Grid Layout */
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Individual Week Card */
+.week-card {
+  background: white;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.week-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* Week Icon */
+.week-icon {
+  width: 60px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+
+/* Week Title */
+.week-title {
+  font-size: 1.1rem;
+  color: #1e3a8a;
+  margin-bottom: 0.75rem;
+}
+
+/* Week Links */
+.week-links a {
+  display: block;
+  margin: 0.25rem 0;
+  color: #2563eb;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.week-links a:hover {
+  text-decoration: underline;
+  color: #1d4ed8;
+}
